@@ -226,7 +226,12 @@ void minesweeper()
 		}
 		cout << "Do you want to play again? (Y/N): ";
 		cin >> reply;
-	} while (toupper(reply) == 'Y');
+	} while (toupper(reply) != 'N');
+    
+    if (toupper(reply) == 'N') {
+        Drawmenu();
+        scroll(currentitem);
+    }
 }
 
 
@@ -403,14 +408,14 @@ void snake()
     clrscr();
     _setcursortype(_NOCURSOR);
     textcolor(WHITE);
-    cprintf("\n   ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿  ");
+    cprintf("\n   â„Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Ã¸  ");
     for(int i=0;i<17;i++)
-	cprintf("   ³                                                                         ³  ");
-    cprintf("   ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ  ");
-    cprintf("   ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿   Press 'x' to Exit            ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿  ");
-    cprintf("   ³  S N A K E  G A M E  ³   Press spc to Pause and Play  ³ SCORE : 0       ³  ");
-    cprintf("   ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ                                ³ STATUS: Playing ³  ");
-    cprintf("                                                           ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ  ");
+	cprintf("   â‰¥                                                                         â‰¥  ");
+    cprintf("   Â¿Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Å¸  ");
+    cprintf("   â„Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Ã¸   Press 'x' to Exit            â„Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Ã¸  ");
+    cprintf("   â‰¥  S N A K E  G A M E  â‰¥   Press spc to Pause and Play  â‰¥ SCORE : 0       â‰¥  ");
+    cprintf("   Â¿Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Å¸                                â‰¥ STATUS: Playing â‰¥  ");
+    cprintf("                                                           Â¿Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Æ’Å¸  ");
     int snkx[20],snky[20],d=LEFT,p=0,sz=6,restart=1;
     while(1)
     {
@@ -453,7 +458,7 @@ void snake()
 	    for(i=0;i<sz-1;i++)
 	    {
 		window(snkx[i],snky[i],snkx[i]+1,snky[i]+1);
-		cprintf("ß");
+		cprintf("ï¬‚");
 	    }
 	    for(i=sz-1;i>=1;i--)
 	    {
@@ -537,7 +542,6 @@ void snake()
 		 textbackground(0);
 		 clrscr();
 		 Drawmenu();
-		 currentitem = 0;
 		 scroll(currentitem);
 		 return;
 		}
@@ -574,7 +578,7 @@ void snake()
 void about()
 {
     clrscr();
-    cout<<"Computer Science Class XI Final Project"<<endl<<"SHAURDUINO"<<endl<<"by SHAURYA CHANDRA\nPress any key to go back to MAIN MENU";
+    cout<<"Computer Science Class XI Final Project"<<endl<<"SHAURDUINO"<<endl<<"by SHAURYA CHANDRA & SHASHANK NARAYAN\nPress any key to go back to MAIN MENU";
     if(getch())
     {
      clrscr();
@@ -617,9 +621,7 @@ int  colcheck(char ch[3][3])
 	    break;
 	}
     }
-    //Returns 0 if there is no satisfying case.
-    //Returns 1 if Player 1 is winning.
-    //Returns 2 if Player 2 is winning.
+    
     if(ans=='O')
 	return 1;
     else if(ans=='X')
@@ -644,7 +646,7 @@ int  diagcheck(char ch[3][3])
 void rewrite(char ch[3][3])
 {
     int i,j;
-    //Most of this gibberish is simply to get the box shape made.
+    
     cout<<"   |   |   \n";
     cout<<" "<<ch[0][0]<<" | "<<ch[0][1]<<" | "<<ch[0][2];
     cout<<endl;
@@ -706,12 +708,11 @@ void tictactoe()
 	    break;
 	}
 	if(chance==10)
-	    cout<<"It is a Draw!!!\n PRESS X";
+	    cout<<"It is a Draw!!!\n PRESS X to EXIT";
     end:;
     }
     if(getch()=='x')
     {
-	currentitem = 0;
 	Drawmenu();
 	scroll(currentitem);
     }
@@ -728,7 +729,7 @@ void getup()
 	cprintf("SCORE : ");
 	window(1,25,80,25);
 	for(int x=0;x<79;x++)
-	cprintf("ß");
+	cprintf("ï¬‚");
 	textcolor(0);
 }
 
@@ -744,26 +745,26 @@ void ds(int jump=0)
 	else t++;
 	window(2,15-t,18,25);
 	cprintf("                 ");
-	cprintf("         ÜÛßÛÛÛÛÜ");
-	cprintf("         ÛÛÛÛÛÛÛÛ");
-	cprintf("         ÛÛÛÛÛßßß");
-	cprintf(" Û      ÜÛÛÛÛßßß ");
-	cprintf(" ÛÛÜ  ÜÛÛÛÛÛÛÜÜÜ ");
-	cprintf(" ßÛÛÛÛÛÛÛÛÛÛÛ  ß ");
-	cprintf("   ßÛÛÛÛÛÛÛß     ");
+	cprintf("         â€¹â‚¬ï¬‚â‚¬â‚¬â‚¬â‚¬â€¹");
+	cprintf("         â‚¬â‚¬â‚¬â‚¬â‚¬â‚¬â‚¬â‚¬");
+	cprintf("         â‚¬â‚¬â‚¬â‚¬â‚¬ï¬‚ï¬‚ï¬‚");
+	cprintf(" â‚¬      â€¹â‚¬â‚¬â‚¬â‚¬ï¬‚ï¬‚ï¬‚ ");
+	cprintf(" â‚¬â‚¬â€¹  â€¹â‚¬â‚¬â‚¬â‚¬â‚¬â‚¬â€¹â€¹â€¹ ");
+	cprintf(" ï¬‚â‚¬â‚¬â‚¬â‚¬â‚¬â‚¬â‚¬â‚¬â‚¬â‚¬â‚¬  ï¬‚ ");
+	cprintf("   ï¬‚â‚¬â‚¬â‚¬â‚¬â‚¬â‚¬â‚¬ï¬‚     ");
 	if(jump==1 || jump==2){
-	cprintf("    ÛÛß ßÛ       ");
-	cprintf("    ÛÜ   ÛÜ      ");
+	cprintf("    â‚¬â‚¬ï¬‚ ï¬‚â‚¬       ");
+	cprintf("    â‚¬â€¹   â‚¬â€¹      ");
 	}else if(a==1)
 	{
-	cprintf("    ßÛÛß  ßßß    ");
-	cprintf("      ÛÜ         ");
+	cprintf("    ï¬‚â‚¬â‚¬ï¬‚  ï¬‚ï¬‚ï¬‚    ");
+	cprintf("      â‚¬â€¹         ");
 	a=2;
 	}
 	else if(a==2)
 	{
-	cprintf("     ßÛÜ ßÛ      ");
-	cprintf("          ÛÜ     ");
+	cprintf("     ï¬‚â‚¬â€¹ ï¬‚â‚¬      ");
+	cprintf("          â‚¬â€¹     ");
 	a=1;
 	}
 	cprintf("                ");
@@ -783,11 +784,11 @@ void obj()
 	cprintf("         ");
 	}
 	window(74-x,20,80-x,25);
-	cprintf("Û    Û ");
-	cprintf("Û    Û ");
-	cprintf("ÛÜÜÜÜÛ ");
-	cprintf("  Û    ");
-	cprintf("  Û  " );
+	cprintf("â‚¬    â‚¬ ");
+	cprintf("â‚¬    â‚¬ ");
+	cprintf("â‚¬â€¹â€¹â€¹â€¹â‚¬ ");
+	cprintf("  â‚¬    ");
+	cprintf("  â‚¬  " );
 	x++;
 	if(x==73)
 	{
@@ -833,7 +834,6 @@ void dinosaur()
 	 textbackground(0);
 	 clrscr();
 	 Drawmenu();
-	 currentitem = 0;
 	 scroll(currentitem);
 	}
 	}while(ch !='x') ;
@@ -846,13 +846,13 @@ void Drawbox(int l,int b,int x ,int y,char text[])
    gotoxy(x,y);
    char w[70] = " ";
    char h[25] = " ";
-   h[0] = '³';
+   h[0] = 'â‰¥';
    for(int i = 0;i<l;i++)
    {
-    w[i]='Ä';
+    w[i]='Æ’';
     h[i+1] = ' ';
    }
-   h[a] = '³';
+   h[a] = 'â‰¥';
    cprintf(w);
    n++;
    for(int j = 0 ;j<b;j++)
@@ -879,6 +879,7 @@ void Highlight(int l, int b,int x , int y , char a)
 }
 void Drawmenu()
 {
+    clrscr();
   gotoxy(35,1);
    textcolor(RED);
   cprintf("SHAURDUINO");
@@ -978,6 +979,7 @@ void main()
    clrscr();
    _setcursortype(_NOCURSOR);
    char a,b;
+    int totalitems = 5;//starting from 0
    Drawmenu();
    scroll(currentitem);
     do{a=getch();
@@ -990,12 +992,12 @@ void main()
 	    {
 	      case 80:
 	       {
-		if(currentitem<6)
+		if(currentitem<totalitems)
 		{
 		     currentitem++;
 		     scroll(currentitem);
 		}
-		else if(currentitem ==6)
+		else if(currentitem ==totalitems)
 		{
 	     currentitem = 0;
 		     scroll(currentitem);
@@ -1011,7 +1013,7 @@ void main()
 		}
 		else if(currentitem == 0)
 		{
-		     currentitem = 6;
+		     currentitem = totalitems;
 		     scroll(currentitem);
 		}
 	       }
