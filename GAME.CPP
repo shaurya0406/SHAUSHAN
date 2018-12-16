@@ -11,7 +11,8 @@ void Drawmenu();
 void select(int);
 void scroll(int);
 int currentitem = 0;
-
+int highscore;
+char buff[255];
 /*****************************minesweeper****************************/
 
 void printBoard(char[9][9]);
@@ -382,17 +383,25 @@ void printLogo()
 
 void score(int s=1)
 {
+    FILE *fp;
     static unsigned long sc=0;
     window(70,22,78,23);
     if(s)
     {
-	sc=sc+100;
+	sc++;
 	cprintf("      ");
 	window(70,22,78,23);
 	cprintf("%ld",sc);
     }
     else
 	sc=0;
+    if (sc>highscore) {
+        highscore = sc;
+	itoa(highscore,buff,10);
+        fp = fopen("/snake.txt", "w+");
+        fprintf(fp, buff);
+        fclose(fp);
+    }
 }
 void status(char *s,int c=WHITE)
 {
@@ -410,13 +419,23 @@ void snake()
     textcolor(WHITE);
     cprintf("\n   ⁄ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒø  ");
     for(int i=0;i<17;i++)
-	cprintf("   ≥                                                                         ≥  ");
+        cprintf("   ≥                                                                         ≥  ");
     cprintf("   ¿ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒŸ  ");
     cprintf("   ⁄ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒø   Press 'x' to Exit            ⁄ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒø  ");
     cprintf("   ≥  S N A K E  G A M E  ≥   Press spc to Pause and Play  ≥ SCORE : 0       ≥  ");
     cprintf("   ¿ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒŸ                                ≥ STATUS: Playing ≥  ");
     cprintf("                                                           ¿ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒŸ  ");
     int snkx[20],snky[20],d=LEFT,p=0,sz=6,restart=1;
+    //obtaining highscore from snake.txt
+    
+
+    FILE *fp;
+    fp = fopen("/snake.txt", "w");
+    fclose(fp);
+    fp = fopen("/snake.txt", "r");
+    fgets(buff, 255, (FILE*)fp);
+    highscore = atoi(buff);
+    fclose(fp);
     while(1)
     {
 	if(restart)
@@ -432,6 +451,7 @@ void snake()
 	    d=LEFT;
 	    restart=0;
 	    score();
+        
 	    window(6,3,76,19);
 	    for(i=0;i<610;i++)
 		cprintf("  ");
@@ -492,6 +512,7 @@ void snake()
 		textcolor(WHITE);
 
 		score();
+
 		sz++;
 
 		switch(d)
@@ -543,10 +564,11 @@ void snake()
 		 clrscr();
 		 Drawmenu();
 		 scroll(currentitem);
+            
 		 return;
 		}
 	    case  32 :
-		status("Paused");
+		status("Paused",YELLOW);
 		getch();
 		break;
 	    case 0 : {
@@ -727,6 +749,8 @@ void getup()
 	cprintf("Press X to Exit, Press Space to Jump");
 	window(62,2,80,3);
 	cprintf("SCORE : ");
+	window(62,4,80,5);
+	cprintf("HIGHSCORE : ");
 	window(1,25,80,25);
 	for(int x=0;x<79;x++)
 	cprintf("ﬂ");
@@ -770,9 +794,21 @@ void ds(int jump=0)
 	cprintf("                ");
 	delay(speed);
 }
-void obj()
+void obstacle()
 {
 	static int x=0,scr=0;
+    
+    FILE *fp;
+    fp = fopen("/dinosaur.txt", "w");
+    fclose(fp);
+    fp = fopen("/dinosaur.txt", "r");
+    fgets(buff, 255, (FILE*)fp);
+    int dinosaur_highscore = atoi(buff);
+    fclose(fp);
+    
+    window(74,4,80,5);
+    cprintf("%d",dinosaur_highscore);
+    
 	if(x==56 && t<4)
 	{
 	scr=0;
@@ -801,6 +837,14 @@ void obj()
 	if(speed>20)
 		speed--;
 	}
+    if(scr>dinosaur_highscore)
+    {
+        dinosaur_highscore = scr;
+        itoa(dinosaur_highscore,buff,10);
+        fp = fopen("/dinosaur.txt", "w+");
+        fprintf(fp, buff);
+        fclose(fp);
+    }
 }
 void dinosaur()
 {
@@ -811,7 +855,7 @@ void dinosaur()
 	while(!kbhit())
 	{
 		ds();
-		obj();
+		obstacle();
 	}
 	ch=getch();
 	if(ch==' ')
@@ -819,12 +863,12 @@ void dinosaur()
 		for(i=0;i<10;i++)
 		{
 		ds(1);
-		obj();
+		obstacle();
 		}
 		for(i=0;i<10;i++)
 		{
 		ds(2);
-		obj();
+		obstacle();
 		}
 	}
 	else if (ch=='x')
@@ -841,6 +885,7 @@ void dinosaur()
 /********************************************MENU***************************************/
 void Drawbox(int l,int b,int x ,int y,char text[])
 {
+   textcolor(YELLOW);
    int n = y;
    int a = l-1;
    gotoxy(x,y);
@@ -862,9 +907,11 @@ void Drawbox(int l,int b,int x ,int y,char text[])
     n++;
    }
    gotoxy(x,n);
-   cout<<w;
+   cprintf(w);
    gotoxy(x+2,y+(b%2));
-   cout<<text;
+   textcolor(WHITE);
+   cprintf(text);
+
 }
 void Highlight(int l, int b,int x , int y , char a)
 {
