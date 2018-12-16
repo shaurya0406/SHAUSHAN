@@ -396,11 +396,11 @@ void score(int s=1)
     else
 	sc=0;
     if (sc>highscore) {
-        highscore = sc;
+	highscore = sc;
 	itoa(highscore,buff,10);
-        fp = fopen("/snake.txt", "w+");
-        fprintf(fp, buff);
-        fclose(fp);
+	fp = fopen("/snake.txt", "w+");
+	fprintf(fp, buff);
+	fclose(fp);
     }
 }
 void status(char *s,int c=WHITE)
@@ -417,9 +417,10 @@ void snake()
     clrscr();
     _setcursortype(_NOCURSOR);
     textcolor(WHITE);
-    cprintf("\n   ⁄ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒø  ");
+    cprintf("                                                           ≥ HIGHSCORE :     ≥  ");
+    cprintf("   ⁄ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒø  ");
     for(int i=0;i<17;i++)
-        cprintf("   ≥                                                                         ≥  ");
+    cprintf("   ≥                                                                         ≥  ");
     cprintf("   ¿ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒŸ  ");
     cprintf("   ⁄ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒø   Press 'x' to Exit            ⁄ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒø  ");
     cprintf("   ≥  S N A K E  G A M E  ≥   Press spc to Pause and Play  ≥ SCORE : 0       ≥  ");
@@ -427,15 +428,18 @@ void snake()
     cprintf("                                                           ¿ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒŸ  ");
     int snkx[20],snky[20],d=LEFT,p=0,sz=6,restart=1;
     //obtaining highscore from snake.txt
-    
+
 
     FILE *fp;
-    fp = fopen("/snake.txt", "w");
-    fclose(fp);
+   // fp = fopen("/snake.txt", "w");
+   // fclose(fp);
     fp = fopen("/snake.txt", "r");
     fgets(buff, 255, (FILE*)fp);
     highscore = atoi(buff);
     fclose(fp);
+    window(73,1,78,2);
+    cprintf("%d",highscore);
+
     while(1)
     {
 	if(restart)
@@ -451,7 +455,7 @@ void snake()
 	    d=LEFT;
 	    restart=0;
 	    score();
-        
+
 	    window(6,3,76,19);
 	    for(i=0;i<610;i++)
 		cprintf("  ");
@@ -799,16 +803,16 @@ void obstacle()
 	static int x=0,scr=0;
     
     FILE *fp;
-    fp = fopen("/dinosaur.txt", "w");
-    fclose(fp);
+   // fp = fopen("/dinosaur.txt", "w");
+   // fclose(fp);
     fp = fopen("/dinosaur.txt", "r");
     fgets(buff, 255, (FILE*)fp);
     int dinosaur_highscore = atoi(buff);
     fclose(fp);
-    
+
     window(74,4,80,5);
     cprintf("%d",dinosaur_highscore);
-    
+
 	if(x==56 && t<4)
 	{
 	scr=0;
@@ -839,11 +843,11 @@ void obstacle()
 	}
     if(scr>dinosaur_highscore)
     {
-        dinosaur_highscore = scr;
-        itoa(dinosaur_highscore,buff,10);
-        fp = fopen("/dinosaur.txt", "w+");
-        fprintf(fp, buff);
-        fclose(fp);
+	dinosaur_highscore = scr;
+	itoa(dinosaur_highscore,buff,10);
+	fp = fopen("/dinosaur.txt", "w+");
+	fprintf(fp, buff);
+	fclose(fp);
     }
 }
 void dinosaur()
