@@ -13,8 +13,8 @@ void scroll(int);
 int currentitem = 0;
 int highscore;
 char buff[255];
-/*****************************minesweeper****************************/
 
+/*****************************MINESWEEPER****************************/
 void printBoard(char[9][9]);
 void checkAdjacent(char[9][9], char[9][9], int, int);
 void placeMines(char [9][9]);
@@ -37,10 +37,14 @@ void printBoard(char playerBoard[9][9])
 			switch (playerBoard[i - 1][j - 1])
 			{
 			case 'F':
+				textcolor(BLUE);
 				cout << char(176);
+				textcolor(WHITE);
 				break;
 			case 'M':
+				textcolor(RED);
 				cout << char(127);
+				textcolor(WHITE);
 				break;
 			case 'E':
 				cout << '_';
@@ -49,7 +53,9 @@ void printBoard(char playerBoard[9][9])
 				cout << char(219);
 				break;
 			default:
+				textcolor(YELLOW);
 				cout << playerBoard[i - 1][j - 1];
+				textcolor(WHITE);
 			}
 		}
 		cout << endl << endl;
@@ -237,7 +243,7 @@ void minesweeper()
 
 
 
-/*****************************word***********************************/
+/*****************************WORD***********************************/
 void printLogo();
 void printLetters(char[], int, int[]);
 int wordCompleted(int[], int);
@@ -253,14 +259,13 @@ typedef struct WORD{
 void word()
 {
 	clrscr();
-//	printLogo();
 	randomize();
-	WORD WORDS[] = { { "CLAUSTROPHOBIA", 14, {0,0,1,1,0,0,0,1,0,0,1,0,1,1} }, { "KLEPTOMANIAC", 12, {0,0,1,0,0,1,0,1,0,1,1,0} }, {"PSYCHOSOMATIC",13,{0,0,0,0,0,1,0,1,0,1,0,1,0} } };
+	WORD WORDS[] = { { "CLAUSTROPHOBIA", 14, {0,0,1,1,0,0,0,1,0,0,1,0,1,1} }, { "KLEPTOMANIAC", 12, {0,0,1,0,0,1,0,1,0,1,1,0} }, {"PSYCHOSOMATIC",13,{0,0,0,0,0,1,0,1,0,1,0,1,0} } , {"INFORMATION", 11, {1,0,0,1,0,0,1,0,1,1,0}, {"ACCOMMODATE", 11, {1,0,0,1,0,0,1,0,1,0,1}}, {"HANDKERCHIEF", 12, {0,1,0,0,0,1,0,0,0,1,1,0}},{"AMBIDEXTROUS", 12, {1,0,0,1,0,1,0,0,0,1,1,0}}, {"EQUIVALENT", 10, {1,0,1,1,0,1,0,1,0,0}}, {"ARCHITECTURE", 12, {1,0,0,0,1,0,1,0,0,1,0,1}}, {"AFICIONADO", 10, {1,0,1,0,1,1,0,1,0,1}}};
 	char reply;
 	int score = 0;
 	do
 	{
-		int j = random(3);
+		int j = random(10);
 		char word[20];
 		int length = WORDS[j].length;
 		int check[20];
@@ -269,13 +274,13 @@ void word()
 			check[i] = WORDS[j].check[i];
 			word[i] = WORDS[j].word[i];
 		}
-		int guesses = 5;
-		cout << "Let's see if you can get this word right!" << endl;
+		int guesses = 5;		
 		while (!wordCompleted(check, length) && guesses)
 		{
+			cout << "Let's see if you can get this word right!" << endl;
 			printLetters(word, length, check);
 			char guess;
-			cout << "Guess: ";
+			cout << "Guessa letter: ";
 			cin >> guess;
 			guess = toupper(guess);
 			int factor = editWord(word, length, check, guess);
@@ -320,12 +325,14 @@ void word()
 
 void printLetters(char word[], int N, int check[])
 {
+	textcolor(YELLOW);
 	for (int i = 0;i < N; i++)
 		if (check[i])
 			cout << word[i]<<" ";
 		else
 			cout << "_ ";
 	cout << endl;
+	textcolor(WHITE);
 }
 
 int wordCompleted(int check[], int N)
@@ -350,30 +357,12 @@ int editWord(char word[], int N, int check[], char guess)
 
 void displayString(char word[], int N)
 {
+	textcolor(YELLOW);
 	for (int i = 0; i < N; i++)
 		cout << word[i];
 	cout << endl;
+	textcolor(WHITE);
 }
-/*
-void printLogo()
-{
-
-	cout << char(186) << "   " << char(186)<<" "<<char(201)<<char(205)<<char(187)<<" "<<char(201)<<char(205)<<char(187)<<" "<<char(203)<<char(205)<<char(187);
-	cout << " " << char(201) << char(205) << char(187)<<" "<<char(201)<<char(205)<<char(187)<<" "<<char(201)<<char(205)<<char(205)<<" "<<char(203)<<char(205)<<char(187)<<" ";
-	cout << char(205) << char(203) << char(205) << " " << char(201) << char(205) << char(187) << endl;
-
-	cout << char(186) << " " << char(186) << " " << char(186) << " " << char(186) << " " << char(186)<<" "<<char(204)<<char(203)<<char(188)<<" "<<char(186)<<" "<<char(186);
-	cout << " " << char(186) << " " << char(186)<<" "<<char(204)<<char(205)<<char(188)<<" "<<char(204)<<char(205)<<"  "<<char(186)<<" "<<char(186)<<"  "<<char(186)<<"  "<<char(204)<<char(205)<<char(185);
-	cout << endl;
-
-	cout << char(200) << char(205) << char(202) << char(205) << char(188) <<" "<<char(200)<<char(205)<<char(188)<<" "<<char(186)<<char(200)<<char(205)<<" "<<char(202)<<char(205)<<char(188);
-	cout << " " << char(200) << char(205) << char(188)<<" "<<char(186)<<"   "<<char(200)<<char(205)<<char(205)<<" "<<char(202)<<char(205)<<char(188)<<" "<<char(205)<<char(202)<<char(205)<<" "<<char(186)<<" "<<char(186);
-	cout << endl << endl << endl;
-}
-
-*/
-
-
 
 /********************************************SNAKE***************************************/
 #define TOP 1
@@ -417,19 +406,17 @@ void snake()
     clrscr();
     _setcursortype(_NOCURSOR);
     textcolor(WHITE);
-    cprintf("                                                           ³ HIGHSCORE :     ³  ");
-    cprintf("   ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿  ");
+    cprintf("                                                           Â³ HIGHSCORE :     Â³  ");
+    cprintf("   ÃšÃ„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Â¿  ");
     for(int i=0;i<17;i++)
-    cprintf("   ³                                                                         ³  ");
-    cprintf("   ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ  ");
-    cprintf("   ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿   Press 'x' to Exit            ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿  ");
-    cprintf("   ³  S N A K E  G A M E  ³   Press spc to Pause and Play  ³ SCORE : 0       ³  ");
-    cprintf("   ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ                                ³ STATUS: Playing ³  ");
-    cprintf("                                                           ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ  ");
+    cprintf("   Â³                                                                         Â³  ");
+    cprintf("   Ã€Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã™  ");
+    cprintf("   ÃšÃ„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Â¿   Press 'x' to Exit            ÃšÃ„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Â¿  ");
+    cprintf("   Â³  S N A K E  G A M E  Â³   Press spc to Pause and Play  Â³ SCORE : 0       Â³  ");
+    cprintf("   Ã€Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã™                                Â³ STATUS: Playing Â³  ");
+    cprintf("                                                           Ã€Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã„Ã™  ");
     int snkx[20],snky[20],d=LEFT,p=0,sz=6,restart=1;
     //obtaining highscore from snake.txt
-
-
     FILE *fp;
    // fp = fopen("/snake.txt", "w");
    // fclose(fp);
@@ -439,7 +426,6 @@ void snake()
     fclose(fp);
     window(73,1,78,2);
     cprintf("%d",highscore);
-
     while(1)
     {
 	if(restart)
@@ -455,7 +441,6 @@ void snake()
 	    d=LEFT;
 	    restart=0;
 	    score();
-
 	    window(6,3,76,19);
 	    for(i=0;i<610;i++)
 		cprintf("  ");
@@ -464,7 +449,8 @@ void snake()
 	if(p!=1)
 	{
 	    randomize();
-	    do{
+	    do
+	    {
 		x=random(70)+6;
 	    }while(x%2==1);
 	    y=random(16)+3;
@@ -482,7 +468,7 @@ void snake()
 	    for(i=0;i<sz-1;i++)
 	    {
 		window(snkx[i],snky[i],snkx[i]+1,snky[i]+1);
-		cprintf("ß");
+		cprintf("ÃŸ");
 	    }
 	    for(i=sz-1;i>=1;i--)
 	    {
@@ -514,11 +500,8 @@ void snake()
 		textcolor(LIGHTGREEN);
 		cprintf("%c",1);
 		textcolor(WHITE);
-
 		score();
-
 		sz++;
-
 		switch(d)
 		{
 		    case RIGHT : snkx[sz-1]+=2;
@@ -567,8 +550,7 @@ void snake()
 		 textbackground(0);
 		 clrscr();
 		 Drawmenu();
-		 scroll(currentitem);
-            
+		 scroll(currentitem);            
 		 return;
 		}
 	    case  32 :
@@ -599,34 +581,31 @@ void snake()
 	    } break;
 	}
     }
-}   // main
+}
 
 void about()
 {
     clrscr();
-    cout<<"Computer Science Class XI Final Project"<<endl<<"SHAURDUINO"<<endl<<"by SHAURYA CHANDRA & SHASHANK NARAYAN\nPress any key to go back to MAIN MENU";
+    cout<<"Computer Science Class XI Final Project"<<endl<<"SHAURDUINO"<<endl<<"by SHAURYA CHANDRA & SHASHANK NARAIN\nPress any key to go back to MAIN MENU";
     if(getch())
     {
      clrscr();
      Drawmenu();
      scroll(currentitem);
     }
-
 }
-/********************************************tictactoe***************************************/
+	
+/********************************************TICTACTOE***************************************/
 int  rowcheck(char ch[3][3])
 {
-
     int i;
     char ans;
     for(i=0;i<3;i++)
-    {
 	if(ch[i][0]==ch[i][1] && ch[i][1]==ch[i][2])
 	{
 	    ans=ch[i][0];
 	    break;
 	}
-    }
     if(ans=='O')
 	return 1;
     else if(ans=='X')
@@ -634,20 +613,17 @@ int  rowcheck(char ch[3][3])
     else
 	return 0;
 }
+	
 int  colcheck(char ch[3][3])
 {
-
     int i;
     char ans;
     for(i=0;i<3;i++)
-    {
 	if(ch[0][i]==ch[1][i] && ch[1][i]==ch[2][i])
 	{
 	    ans=ch[0][i];
 	    break;
-	}
-    }
-    
+	}    
     if(ans=='O')
 	return 1;
     else if(ans=='X')
@@ -655,6 +631,7 @@ int  colcheck(char ch[3][3])
     else
 	return 0;
 }
+	
 int  diagcheck(char ch[3][3])
 {
     char ans;
@@ -669,10 +646,10 @@ int  diagcheck(char ch[3][3])
     else
 	return 0;
 }
+	
 void rewrite(char ch[3][3])
 {
-    int i,j;
-    
+    int i,j;    
     cout<<"   |   |   \n";
     cout<<" "<<ch[0][0]<<" | "<<ch[0][1]<<" | "<<ch[0][2];
     cout<<endl;
@@ -686,6 +663,7 @@ void rewrite(char ch[3][3])
     cout<<endl;
     cout<<"   |   |   \n";
 }
+	
 void tictactoe()
 {
     clrscr();
@@ -699,7 +677,6 @@ void tictactoe()
 	cin>>num;
 	x=(num-1)/ 3;
 	y=(num-1) % 3;
-
 	if(ch[x][y]=='X'||ch[x][y]=='O')
 	{
 	    chance--;
@@ -707,14 +684,12 @@ void tictactoe()
 	    rewrite(ch);
 	    goto end;
 	}
-
 	if(chance % 2 == 0)
 	    ch[x][y]='O';
 	else
 	    ch[x][y]='X';
 	clrscr();
 	rewrite(ch);
-
 	if(rowcheck(ch)!=0)
 	{
 	    cout<<"Player "<<rowcheck(ch)<<" wins!!";
@@ -743,7 +718,10 @@ void tictactoe()
 	scroll(currentitem);
     }
 }
-/********************************************dinosaur***************************************/
+	
+/********************************************DINOSAUR***************************************/
+int t,speed=40;
+	
 void getup()
 {
 	textcolor(BLACK);
@@ -757,15 +735,13 @@ void getup()
 	cprintf("HIGHSCORE : ");
 	window(1,25,80,25);
 	for(int x=0;x<79;x++)
-	cprintf("ß");
+	cprintf("ÃŸ");
 	textcolor(0);
 }
 
-int t,speed=40;
 void ds(int jump=0)
 {
 	static int a=1;
-
 	if(jump==0)
 		t=0;
 	else if(jump==2)
@@ -773,62 +749,60 @@ void ds(int jump=0)
 	else t++;
 	window(2,15-t,18,25);
 	cprintf("                 ");
-	cprintf("         ÜÛßÛÛÛÛÜ");
-	cprintf("         ÛÛÛÛÛÛÛÛ");
-	cprintf("         ÛÛÛÛÛßßß");
-	cprintf(" Û      ÜÛÛÛÛßßß ");
-	cprintf(" ÛÛÜ  ÜÛÛÛÛÛÛÜÜÜ ");
-	cprintf(" ßÛÛÛÛÛÛÛÛÛÛÛ  ß ");
-	cprintf("   ßÛÛÛÛÛÛÛß     ");
+	cprintf("         ÃœÃ›ÃŸÃ›Ã›Ã›Ã›Ãœ");
+	cprintf("         Ã›Ã›Ã›Ã›Ã›Ã›Ã›Ã›");
+	cprintf("         Ã›Ã›Ã›Ã›Ã›ÃŸÃŸÃŸ");
+	cprintf(" Ã›      ÃœÃ›Ã›Ã›Ã›ÃŸÃŸÃŸ ");
+	cprintf(" Ã›Ã›Ãœ  ÃœÃ›Ã›Ã›Ã›Ã›Ã›ÃœÃœÃœ ");
+	cprintf(" ÃŸÃ›Ã›Ã›Ã›Ã›Ã›Ã›Ã›Ã›Ã›Ã›  ÃŸ ");
+	cprintf("   ÃŸÃ›Ã›Ã›Ã›Ã›Ã›Ã›ÃŸ     ");
 	if(jump==1 || jump==2){
-	cprintf("    ÛÛß ßÛ       ");
-	cprintf("    ÛÜ   ÛÜ      ");
+		cprintf("    Ã›Ã›ÃŸ ÃŸÃ›       ");
+		cprintf("    Ã›Ãœ   Ã›Ãœ      ");
 	}else if(a==1)
 	{
-	cprintf("    ßÛÛß  ßßß    ");
-	cprintf("      ÛÜ         ");
-	a=2;
+		cprintf("    ÃŸÃ›Ã›ÃŸ  ÃŸÃŸÃŸ    ");
+		cprintf("      Ã›Ãœ         ");
+		a=2;
 	}
 	else if(a==2)
 	{
-	cprintf("     ßÛÜ ßÛ      ");
-	cprintf("          ÛÜ     ");
-	a=1;
+		cprintf("     ÃŸÃ›Ãœ ÃŸÃ›      ");
+		cprintf("          Ã›Ãœ     ");
+		a=1;
 	}
 	cprintf("                ");
 	delay(speed);
 }
+	
 void obstacle()
 {
-	static int x=0,scr=0;
-    
-    FILE *fp;
-   // fp = fopen("/dinosaur.txt", "w");
-   // fclose(fp);
-    fp = fopen("/dinosaur.txt", "r");
-    fgets(buff, 255, (FILE*)fp);
-    int dinosaur_highscore = atoi(buff);
-    fclose(fp);
-
-    window(74,4,80,5);
-    cprintf("%d",dinosaur_highscore);
-
+	static int x=0,scr=0;    
+	FILE *fp;
+	// fp = fopen("/dinosaur.txt", "w");
+	// fclose(fp);
+	fp = fopen("/dinosaur.txt", "r");
+	fgets(buff, 255, (FILE*)fp);
+	int dinosaur_highscore = atoi(buff);
+	fclose(fp);
+	window(74,4,80,5);
+	cprintf("%d",dinosaur_highscore);	
 	if(x==56 && t<4)
 	{
-	scr=0;
-	speed=40;
-	window(36,8,60,9);
-	cprintf("Game Over");
-	getch();
-	window(36,8,60,9);
-	cprintf("         ");
+		scr=0;
+		speed=40;
+		window(36,8,60,9);
+		cprintf("Game Over");
+		getch();
+		window(36,8,60,9);
+		cprintf("         ");
 	}
 	window(74-x,20,80-x,25);
-	cprintf("Û    Û ");
-	cprintf("Û    Û ");
-	cprintf("ÛÜÜÜÜÛ ");
-	cprintf("  Û    ");
-	cprintf("  Û  " );
+	cprintf("Ã›    Ã› ");
+	cprintf("Ã›    Ã› ");
+	cprintf("Ã›ÃœÃœÃœÃœÃ› ");
+	cprintf("  Ã›    ");
+	cprintf("  Ã›  " );
 	x++;
 	if(x==73)
 	{
@@ -841,51 +815,53 @@ void obstacle()
 	if(speed>20)
 		speed--;
 	}
-    if(scr>dinosaur_highscore)
-    {
-	dinosaur_highscore = scr;
-	itoa(dinosaur_highscore,buff,10);
-	fp = fopen("/dinosaur.txt", "w+");
-	fprintf(fp, buff);
-	fclose(fp);
-    }
+	if(scr>dinosaur_highscore)
+	{
+		dinosaur_highscore = scr;
+		itoa(dinosaur_highscore,buff,10);
+		fp = fopen("/dinosaur.txt", "w+");
+		fprintf(fp, buff);
+		fclose(fp);
+	}
 }
+	
 void dinosaur()
 {
 	char ch;
 	int i;
 	getup();
 	do{
-	while(!kbhit())
-	{
-		ds();
-		obstacle();
-	}
-	ch=getch();
-	if(ch==' ')
-	{
-		for(i=0;i<10;i++)
+		while(!kbhit())
 		{
-		ds(1);
-		obstacle();
+			ds();
+			obstacle();
 		}
-		for(i=0;i<10;i++)
+		ch=getch();
+		if(ch==' ')
 		{
-		ds(2);
-		obstacle();
+			for(i=0;i<10;i++)
+			{
+				ds(1);
+				obstacle();
+			}
+			for(i=0;i<10;i++)
+			{
+				ds(2);
+				obstacle();
+			}	
 		}
-	}
-	else if (ch=='x')
-	{
-	 window(1,1,80,25);
-	 textcolor(WHITE);
-	 textbackground(0);
-	 clrscr();
-	 Drawmenu();
-	 scroll(currentitem);
-	}
+		else if (ch=='x')
+		{
+			window(1,1,80,25);
+	 		textcolor(WHITE);
+	 		textbackground(0);
+	 		clrscr();
+	 		Drawmenu();
+	 		scroll(currentitem);
+		}
 	}while(ch !='x') ;
 }
+	
 /********************************************MENU***************************************/
 void Drawbox(int l,int b,int x ,int y,char text[])
 {
@@ -895,13 +871,13 @@ void Drawbox(int l,int b,int x ,int y,char text[])
    gotoxy(x,y);
    char w[70] = " ";
    char h[25] = " ";
-   h[0] = '³';
+   h[0] = 'Â³';
    for(int i = 0;i<l;i++)
    {
-    w[i]='Ä';
-    h[i+1] = ' ';
+   	w[i]='Ã„';
+   	h[i+1] = ' ';
    }
-   h[a] = '³';
+   h[a] = 'Â³';
    cprintf(w);
    n++;
    for(int j = 0 ;j<b;j++)
@@ -915,91 +891,76 @@ void Drawbox(int l,int b,int x ,int y,char text[])
    gotoxy(x+2,y+(b%2));
    textcolor(WHITE);
    cprintf(text);
-
 }
+	
 void Highlight(int l, int b,int x , int y , char a)
 {
    int m = x,n=y;
    char w[70] = " ";
    for(int i = 0;i<l;i++)
-    w[i] = a;
-    textcolor(RED);
+   	w[i] = a;
+   textcolor(RED);
    gotoxy(m,n+b+1);
    cprintf(w);
-    textcolor(WHITE);
+   textcolor(WHITE);
 }
+	
 void Drawmenu()
 {
-    clrscr();
-  gotoxy(35,1);
-   textcolor(RED);
-  cprintf("SHAURDUINO");
-   textcolor(WHITE);
-  Drawbox(20,1,30,3,"TIC TAC TOE");  //(70,25)
-  Drawbox(20,1,30,6,"DINOSAUR");
-  Drawbox(20,1,30,9,"SNAKE");
-  Drawbox(20,1,30,12,"WORD");
-  Drawbox(20,1,30,15,"MINESWEEPER");
-    Drawbox(20,1,30,18,"ABOUT");
-  gotoxy(1,21);
-  cout<<"PRESS X TO EXIT";
- // Highlight(20,4,30,2,'*');
-
+	clrscr();
+  	gotoxy(35,1);
+   	textcolor(RED);
+  	cprintf("SHAURDUINO");
+   	textcolor(WHITE);
+  	Drawbox(20,1,30,3,"TIC TAC TOE");
+  	Drawbox(20,1,30,6,"DINOSAUR");
+  	Drawbox(20,1,30,9,"SNAKE");
+  	Drawbox(20,1,30,12,"WORD");
+  	Drawbox(20,1,30,15,"MINESWEEPER");
+    	Drawbox(20,1,30,18,"ABOUT");
+  	gotoxy(1,21);
+  	cout<<"PRESS X TO EXIT";
+ 	// Highlight(20,4,30,2,'*');
 }
+	
 void scroll(int c)
 {
  clrscr();
  Drawmenu();
  switch(c)
  {
-   case 0:
-       {
-	 Highlight(20,1,30,3,'*');
-       }
-       break;
-   case 1:
-       {
-	 Highlight(20,1,30,6,'*');
-       }
-       break;
-   case 2:
-       {
-	 Highlight(20,1,30,9,'*');
-       }
-       break;
-     case 3:
-     {
-	 Highlight(20,1,30,12,'*');
-     }
-     break;
-      case 4:
-     {
-	 Highlight(20,1,30,15,'*');
-     }
-     break;
-      case 5:
-     {
-	 Highlight(20,1,30,18,'*');
-     }
-	 break;
-   default:
-       return;
+ case 0:
+	Highlight(20,1,30,3,'*');
+       	break;
+ case 1:
+	Highlight(20,1,30,6,'*');
+	break;
+ case 2:
+	Highlight(20,1,30,9,'*');
+        break;
+ case 3:
+	Highlight(20,1,30,12,'*');
+        break;
+ case 4:
+	Highlight(20,1,30,15,'*');
+ 	break;
+ case 5:
+	Highlight(20,1,30,18,'*');
+	break;
+ default:
+       	return;
  }
 }
 void select(int c)
 {
  switch(c)
  {
-     case 0:
-     {
-	 tictactoe();
-     }
-    break;
-   case 1:
-       {
-	   dinosaur();
-       }
-   break;
+ case 0:
+	tictactoe();
+   	break;
+ case 1:
+	dinosaur();
+   	break;
    case 2:
    {
     snake();
@@ -1024,16 +985,18 @@ void select(int c)
    return;
  }
 }
-/********************************************main***************************************/
+
+/********************************************MAIN***************************************/
 void main()
 {
    clrscr();
    _setcursortype(_NOCURSOR);
    char a,b;
-    int totalitems = 5;//starting from 0
+   int totalitems = 5;//starting from 0
    Drawmenu();
    scroll(currentitem);
-    do{a=getch();
+   do{
+	a=getch();
    switch(tolower(a))
    {
      case 0:
@@ -1080,10 +1043,6 @@ void main()
      break;
      case 'x':
      return;
-
     }
-
    }while(a!='x');
-
 }
-
