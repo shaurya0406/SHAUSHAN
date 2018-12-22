@@ -7,6 +7,7 @@
 #include<ctype.h>
 #include<iomanip.h>
 
+void printLogo();
 void Drawmenu();
 void select(int);
 void scroll(int);
@@ -38,12 +39,12 @@ void printBoard(char playerBoard[9][9])
 			{
 			case 'F':
 				textcolor(BLUE);
-				cout << char(176);
+				cprintf(char(176));
 				textcolor(WHITE);
 				break;
 			case 'M':
 				textcolor(RED);
-				cout << char(127);
+				cprintf(char(127));
 				textcolor(WHITE);
 				break;
 			case 'E':
@@ -54,7 +55,7 @@ void printBoard(char playerBoard[9][9])
 				break;
 			default:
 				textcolor(YELLOW);
-				cout << playerBoard[i - 1][j - 1];
+				cprintf(playerBoard[i - 1][j - 1]);
 				textcolor(WHITE);
 			}
 		}
@@ -168,7 +169,6 @@ int adjacentSquares(int squares[8][2], int R, int C)
 
 void minesweeper()
 {
-	randomize();
 	char reply = 'N';
 	do
 	{
@@ -233,15 +233,12 @@ void minesweeper()
 		}
 		cout << "Do you want to play again? (Y/N): ";
 		cin >> reply;
-	} while (toupper(reply) != 'N');
-    
+	} while (toupper(reply) != 'N');    
     if (toupper(reply) == 'N') {
         Drawmenu();
         scroll(currentitem);
     }
 }
-
-
 
 /*****************************WORD***********************************/
 void printLogo();
@@ -294,7 +291,6 @@ void word()
 			else
 				cout << "Incorrect Guess!" << endl << "You have only " << --guesses << " guesses left." << endl;
 			clrscr();
-  //    printLogo();
 		}
 		if (guesses > 0)
 		{
@@ -313,14 +309,14 @@ void word()
 		cout << endl;
 	} while (toupper(reply) != 'N');
    if(toupper(reply) == 'N')
-     {
-        window(1,1,80,25);
-	 textcolor(WHITE);
-	 textbackground(0);
-	 clrscr();
-	 Drawmenu();
-	 scroll(currentitem);
-}
+   {
+       	window(1,1,80,25);
+	textcolor(WHITE);
+	textbackground(0);
+	clrscr();
+	Drawmenu();
+	scroll(currentitem);
+   }
 }
 
 void printLetters(char word[], int N, int check[])
@@ -328,9 +324,11 @@ void printLetters(char word[], int N, int check[])
 	textcolor(YELLOW);
 	for (int i = 0;i < N; i++)
 		if (check[i])
-			cout << word[i]<<" ";
+		{
+			cprintf(word[i]);
+			cout<<' ';
 		else
-			cout << "_ ";
+			cprintf("_ ");
 	cout << endl;
 	textcolor(WHITE);
 }
@@ -359,7 +357,7 @@ void displayString(char word[], int N)
 {
 	textcolor(YELLOW);
 	for (int i = 0; i < N; i++)
-		cout << word[i];
+		cprintf(word[i];
 	cout << endl;
 	textcolor(WHITE);
 }
@@ -416,10 +414,8 @@ void snake()
     cprintf("   ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ                                ³ STATUS: Playing ³  ");
     cprintf("                                                           ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ  ");
     int snkx[20],snky[20],d=LEFT,p=0,sz=6,restart=1;
-    //obtaining highscore from snake.txt
+    //Obtaining highscore from snake.txt
     FILE *fp;
-   // fp = fopen("/snake.txt", "w");
-   // fclose(fp);
     fp = fopen("/snake.txt", "r");
     fgets(buff, 255, (FILE*)fp);
     highscore = atoi(buff);
@@ -448,7 +444,6 @@ void snake()
 	int x,y;
 	if(p!=1)
 	{
-	    randomize();
 	    do
 	    {
 		x=random(70)+6;
@@ -580,18 +575,6 @@ void snake()
 		}
 	    } break;
 	}
-    }
-}
-
-void about()
-{
-    clrscr();
-    cout<<"Computer Science Class XI Final Project"<<endl<<"SHAURDUINO"<<endl<<"by SHAURYA CHANDRA & SHASHANK NARAIN\nPress any key to go back to MAIN MENU";
-    if(getch())
-    {
-     clrscr();
-     Drawmenu();
-     scroll(currentitem);
     }
 }
 	
@@ -908,17 +891,15 @@ void Highlight(int l, int b,int x , int y , char a)
 void Drawmenu()
 {
 	clrscr();
-  	gotoxy(35,1);
-   	textcolor(RED);
-  	cprintf("SHAURDUINO");
-   	textcolor(WHITE);
-  	Drawbox(20,1,30,3,"TIC TAC TOE");
-  	Drawbox(20,1,30,6,"DINOSAUR");
-  	Drawbox(20,1,30,9,"SNAKE");
-  	Drawbox(20,1,30,12,"WORD");
-  	Drawbox(20,1,30,15,"MINESWEEPER");
-    	Drawbox(20,1,30,18,"ABOUT");
-  	gotoxy(1,21);
+  	//gotoxy(35,1);textcolor(RED);cprintf("SHAURDUINO");textcolor(WHITE);	
+	printLogo();
+  	Drawbox(20,1,30,5,"TIC TAC TOE");
+  	Drawbox(20,1,30,8,"RAMPAGE");
+  	Drawbox(20,1,30,11,"SLITHER");
+  	Drawbox(20,1,30,14,"WORDOPEDIA");
+  	Drawbox(20,1,30,17,"MINESWEEPER");
+    	Drawbox(20,1,30,20,"ABOUT");
+  	gotoxy(35,23);
   	cout<<"PRESS X TO EXIT";
  	// Highlight(20,4,30,2,'*');
 }
@@ -985,10 +966,41 @@ void select(int c)
    return;
  }
 }
+	
+void printLogo()
+{
+	//Display ARCADEMASTER
+	gotoxy(15,1);
+	cout << char(201) << char(205) << char(187) << ' ' << char(201) << char(205) << char(187) << ' ' << char(201) << char(205) << char(205) << ' ' << char(201) << char(205) << char(187) << ' ' << char(203) << char(205) << char(187) << ' ' << char(201) << char(205) << char(205) << ' ';
+	cout << char(201) << char(203) << char(187) << ' ' << char(201) << char(205) << char(187) << ' ' << char(201) << char(205) << char(205) << ' ' << char(205) << char(203) << char(205) << ' ' << char(201) << char(205) << char(205) << ' ' << char(201) << char(205) << char(187);
+	gotoxy(15,2);
+	cout << char(204) << char(205) << char(185) << ' ' << char(204) << char(203) << char(188) << ' ' << char(186) << "   " << char(204) << char(205) << char(185) << ' ' << char(186) << ' ' << char(186) << ' ' << char(204) << char(205) << char(205) << ' ';
+	cout << char(186) << char(186) << char(186) << ' ' << char(204) << char(205) << char(185) << ' ' << char(200) << char(205) << char(187) << "  " << char(186) << "  " << char(204) << char(205) << char(205) << ' ' << char(204) << char(203) << char(188);
+	gotoxy(15,3);
+	cout << char(186) << ' ' << char(186) << ' ' << char(186) << char(200) << char(205) << ' ' << char(200) << char(205) << char(205) << ' ' << char(186) << ' ' << char(186) << ' ' << char(202) << char(205) << char(188) << ' ' << char(200) << char(205) << char(205) << ' ';
+	cout << char(186) << ' ' << char(186) << ' ' << char(186) << ' ' << char(186) << ' ' << char(205) << char(205) << char(188) << "  " << char(186) << "  " << char(200) << char(205) << char(205) << ' ' << char(186) << char(200) << char(205);
+}
+	
+
+void about()
+{
+    	clrscr();
+    	textcolor(LIGHTBLUE);
+    	cprintf("ARCADEMASTER");
+	textcolor(WHITE);
+	cout<<"Computer Science Final Project"<<endl<<"by SHAURYA CHANDRA & SHASHANK NARAIN"<<endl<<"Class 11 G"<<endl<<"Press any key to go back to MAIN MENU";
+    	if(getch())
+    	{
+     		clrscr();
+     		Drawmenu();
+     		scroll(currentitem);
+    	}
+}
 
 /********************************************MAIN***************************************/
 void main()
 {
+   randomize();
    clrscr();
    _setcursortype(_NOCURSOR);
    char a,b;
@@ -1031,7 +1043,7 @@ void main()
 		     scroll(currentitem);
 		}
 	       }
-		 break;
+	 	break;
 	 case 13:
 	     select(currentitem);
 	 break;
