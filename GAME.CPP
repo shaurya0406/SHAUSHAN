@@ -1,4 +1,4 @@
-﻿#include<conio.h>
+#include<conio.h>
 #include<iostream.h>
 #include<string.h>
 #include<stdio.h>
@@ -55,9 +55,7 @@ void printBoard(char playerBoard[9][9])
 				cout << char(219);
 				break;
 			default:
-				textcolor(YELLOW);
 				cout<<playerBoard[i-1][j-1];
-				textcolor(WHITE);
 			}
 		}
 		cout << endl << endl;
@@ -185,7 +183,7 @@ void minesweeper()
 			printBoard(playerBoard);
 			char mode;
 			cout << endl;
-			cout << "Do you want to place a flag, check a mine or remove a flag? (F/M/R): ";
+			cout << "Do you want to place a flag, check a mine, remove a flag or quit the game? (F/M/R/X): ";
 			cin >> mode;
 			mode = toupper(mode);
 			if (mode == 'M')
@@ -214,13 +212,12 @@ void minesweeper()
 				if (playerBoard[R - 1][C - 1] == 'F')
 					playerBoard[R - 1][C - 1] = 'H';
 			}
-      else if (mode=='X')
-      {
-       Drawmenu();
-       scroll(currentitem);
-       return;
-      }
-
+      			else if (mode=='X')
+      			{
+       				Drawmenu();
+       				scroll(currentitem);
+     				return;
+     			}
 			else cout << "Invalid input!";
 		}
 		clrscr();
@@ -265,12 +262,12 @@ void word()
 {
 	clrscr();
 	randomize();
-	WORD WORDS[] = { { "CLAUSTROPHOBIA", 14, {0,0,1,1,0,0,0,1,0,0,1,0,1,1} }, { "KLEPTOMANIAC", 12, {0,0,1,0,0,1,0,1,0,1,1,0} }, {"PSYCHOSOMATIC",13,{0,0,0,0,0,1,0,1,0,1,0,1,0} }};// , {"INFORMATION", 11, {1,0,0,1,0,0,1,0,1,1,0}, {"ACCOMMODATE", 11, {1,0,0,1,0,0,1,0,1,0,1}}, {"HANDKERCHIEF", 12, {0,1,0,0,0,1,0,0,0,1,1,0}},{"AMBIDEXTROUS", 12, {1,0,0,1,0,1,0,0,0,1,1,0}}, {"EQUIVALENT", 10, {1,0,1,1,0,1,0,1,0,0}}, {"ARCHITECTURE", 12, {1,0,0,0,1,0,1,0,0,1,0,1}}, {"AFICIONADO", 10, {1,0,1,0,1,1,0,1,0,1}}};
+	WORD WORDS[10] = { { "CLAUSTROPHOBIA", 14, {0,0,1,1,0,0,0,1,0,0,1,0,1,1} }, { "KLEPTOMANIAC", 12, {0,0,1,0,0,1,0,1,0,1,1,0} }, {"PSYCHOSOMATIC",13,{0,0,0,0,0,1,0,1,0,1,0,1,0} }}, {"INFORMATION", 11, {1,0,0,1,0,0,1,0,1,1,0}}, {"ACCOMMODATE", 11, {1,0,0,1,0,0,1,0,1,0,1}}, {"HANDKERCHIEF", 12, {0,1,0,0,0,1,0,0,0,1,1,0}},{"AMBIDEXTROUS", 12, {1,0,0,1,0,1,0,0,0,1,1,0}}, {"EQUIVALENT", 10, {1,0,1,1,0,1,0,1,0,0}}, {"ARCHITECTURE", 12, {1,0,0,0,1,0,1,0,0,1,0,1}}, {"AFICIONADO", 10, {1,0,1,0,1,1,0,1,0,1}}};
 	char reply;
 	int score = 0;
 	do
 	{
-		int j = random(3);
+		int j = random(10);
 		char word[20];
 		int length = WORDS[j].length;
 		int check[20];
@@ -285,7 +282,7 @@ void word()
 			cout << "Let's see if you can get this word right!" << endl;
 			printLetters(word, length, check);
 			char guess;
-			cout << "Guessa letter: ";
+			cout << "Guess a letter: ";
 			cin >> guess;
 			guess = toupper(guess);
 			int factor = editWord(word, length, check, guess);
@@ -376,34 +373,35 @@ void displayString(char word[], int N)
 
 void score(int s=1)
 {
-    FILE *fp;
-    static unsigned long sc=0;
-    window(70,22,78,23);
-    if(s)
-    {
-	sc++;
-	cprintf("      ");
-	window(70,22,78,23);
-	cprintf("%ld",sc);
-    }
-    else
-	sc=0;
-    if (sc>highscore) {
-	highscore = sc;
-	itoa(highscore,buff,10);
-	fp = fopen("/snake.txt", "w+");
-	fprintf(fp, buff);
-	fclose(fp);
-    }
+    	FILE *fp;
+	static unsigned long sc=0;
+    	window(70,22,78,23);
+    	if(s)
+    	{
+		sc++;
+		cprintf("      ");
+		window(70,22,78,23);
+		cprintf("%ld",sc);
+    	}	
+    	else
+		sc=0;
+    	if (sc>highscore) {
+		highscore = sc;
+		itoa(highscore,buff,10);
+		fp = fopen("/snake.txt", "w+");
+		fprintf(fp, buff);
+		fclose(fp);
+    	}
 }
+
 void status(char *s,int c=WHITE)
 {
-    window(70,23,78,25);
-    textcolor(c);
-    cprintf("%s",s);
-    for(int x=strlen(s);x<7;x++)
-	cprintf(" ");
-    textcolor(WHITE);
+	window(70,23,78,25);
+    	textcolor(c);
+    	cprintf("%s",s);
+    	for(int x=strlen(s);x<7;x++)
+		cprintf(" ");
+    	textcolor(WHITE);
 }
 void snake()
 {
@@ -420,7 +418,6 @@ void snake()
     cprintf("   ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ                                ³ STATUS: Playing ³  ");
     cprintf("                                                           ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ  ");
     int snkx[20],snky[20],d=LEFT,p=0,sz=6,restart=1;
-    //Obtaining highscore from snake.txt
     FILE *fp;
     fp = fopen("/snake.txt", "r");
     fgets(buff, 255, (FILE*)fp);
@@ -768,8 +765,6 @@ void obstacle()
 {
 	static int x=0,scr=0;    
 	FILE *fp;
-	// fp = fopen("/dinosaur.txt", "w");
-	// fclose(fp);
 	fp = fopen("/dinosaur.txt", "r");
 	fgets(buff, 255, (FILE*)fp);
 	int dinosaur_highscore = atoi(buff);
@@ -795,14 +790,14 @@ void obstacle()
 	x++;
 	if(x==73)
 	{
-	x=0;
-	scr++;
-	window(70,2,80,3);
-	cprintf("     ");
-	window(70,2,80,3);
-	cprintf("%d",scr);
-	if(speed>20)
-		speed--;
+		x=0;
+		scr++;
+		window(70,2,80,3);
+		cprintf("     ");
+		window(70,2,80,3);
+		cprintf("%d",scr);
+		if(speed>20)
+			speed--;
 	}
 	if(scr>dinosaur_highscore)
 	{
@@ -848,7 +843,7 @@ void dinosaur()
 	 		Drawmenu();
 	 		scroll(currentitem);
 		}
-	}while(ch !='x') ;
+	}while(ch !='x');
 }
 	
 /********************************************MENU***************************************/
@@ -897,7 +892,6 @@ void Highlight(int l, int b,int x , int y , char a)
 void Drawmenu()
 {
 	clrscr();
-  	//gotoxy(35,1);textcolor(RED);cprintf("SHAURDUINO");textcolor(WHITE);	
 	printLogo();
   	Drawbox(20,1,30,5,"TIC TAC TOE");
   	Drawbox(20,1,30,8,"RAMPAGE");
@@ -907,7 +901,6 @@ void Drawmenu()
     	Drawbox(20,1,30,20,"ABOUT");
   	gotoxy(35,23);
   	cout<<"PRESS X TO EXIT";
- 	// Highlight(20,4,30,2,'*');
 }
 	
 void scroll(int c)
@@ -917,22 +910,22 @@ void scroll(int c)
  switch(c)
  {
  case 0:
-	Highlight(20,1,30,3,'*');
+	Highlight(20,1,30,5,'*');
        	break;
  case 1:
-	Highlight(20,1,30,6,'*');
+	Highlight(20,1,30,8,'*');
 	break;
  case 2:
-	Highlight(20,1,30,9,'*');
+	Highlight(20,1,30,11,'*');
         break;
  case 3:
-	Highlight(20,1,30,12,'*');
+	Highlight(20,1,30,14,'*');
         break;
  case 4:
-	Highlight(20,1,30,15,'*');
+	Highlight(20,1,30,17,'*');
  	break;
  case 5:
-	Highlight(20,1,30,18,'*');
+	Highlight(20,1,30,21,'*');
 	break;
  default:
        	return;
@@ -948,34 +941,25 @@ void select(int c)
  case 1:
 	dinosaur();
    	break;
-   case 2:
-   {
-    snake();
-   }
-    break;
-    case 3:
-     {
-       word();
-     }
-	 break;
-	  case 4:
-     {
-       minesweeper();
-     }
-	 break;
-     case 5:
-     {
-       about();
-     }
-	 break;
-   default:
-   return;
+ case 2:
+    	snake();
+    	break;
+ case 3:
+        word();
+  	break;
+ case 4:
+	minesweeper();
+	break;
+ case 5:
+       	about();
+	break;
+ default:
+ 	return;
  }
 }
 
 void printLogo()
 {
-	//Display ARCADEMASTER
 	gotoxy(15,1);
 	cout << char(201) << char(205) << char(187) << ' ' << char(201) << char(205) << char(187) << ' ' << char(201) << char(205) << char(205) << ' ' << char(201) << char(205) << char(187) << ' ' << char(203) << char(205) << char(187) << ' ' << char(201) << char(205) << char(205) << ' ';
 	cout << char(201) << char(203) << char(187) << ' ' << char(201) << char(205) << char(187) << ' ' << char(201) << char(205) << char(205) << ' ' << char(205) << char(203) << char(205) << ' ' << char(201) << char(205) << char(205) << ' ' << char(201) << char(205) << char(187);
@@ -994,7 +978,7 @@ void about()
     	textcolor(LIGHTBLUE);
     	cprintf("ARCADEMASTER");
 	textcolor(WHITE);
-	cout<<"Computer Science Final Project"<<endl<<"by SHAURYA CHANDRA & SHASHANK NARAIN"<<endl<<"Class 11 G"<<endl<<"Press any key to go back to MAIN MENU";
+	cout<<endl<<"Computer Science Final Project"<<endl<<"by SHAURYA CHANDRA & SHASHANK NARAIN"<<endl<<"Class 11 G"<<endl<<"Press any key to go back to MAIN MENU";
     	if(getch())
     	{
      		clrscr();
@@ -1010,20 +994,20 @@ void main()
    clrscr();
    _setcursortype(_NOCURSOR);
    char a,b;
-   int totalitems = 5;//starting from 0
+   int totalitems = 5;
    Drawmenu();
    scroll(currentitem);
    do{
 	a=getch();
-   switch(tolower(a))
-   {
-     case 0:
-     {
-	    b = getch();
-	    switch(b)
-	    {
-	      case 80:
-	       {
+   	switch(tolower(a))
+   	{
+     		case 0:
+     		{
+		b = getch();
+	    	switch(b)
+	    	{
+	      	case 80:
+	       	{
 		if(currentitem<totalitems)
 		{
 		     currentitem++;
@@ -1031,10 +1015,10 @@ void main()
 		}
 		else if(currentitem ==totalitems)
 		{
-	     currentitem = 0;
+		     currentitem = 0;
 		     scroll(currentitem);
 		}
-	       }
+		}
 		  break;
 	      case 72:
 	       {
