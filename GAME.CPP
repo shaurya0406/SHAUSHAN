@@ -532,7 +532,7 @@ void snake()
 		    window(snkx[i],snky[i],snkx[i]+1,snky[i]+1);
 		    cprintf("");
 		}
-		status("Stoped",LIGHTRED);
+		status("Stopped",LIGHTRED);
 		score(0);
 		restart=1;
 		break;
@@ -635,19 +635,29 @@ int  diagcheck(char ch[3][3])
 	
 void rewrite(char ch[3][3])
 {
-    int i,j;    
-    cout<<"   |   |   \n";
-    cout<<" "<<ch[0][0]<<" | "<<ch[0][1]<<" | "<<ch[0][2];
-    cout<<endl;
-    cout<<"___|___|___"<<endl;
-    cout<<"   |   |   \n";
-    cout<<" "<<ch[1][0]<<" | "<<ch[1][1]<<" | "<<ch[1][2];
-    cout<<endl;
-    cout<<"___|___|___"<<endl;
-    cout<<"   |   |   \n";
-    cout<<" "<<ch[2][0]<<" | "<<ch[2][1]<<" | "<<ch[2][2];
-    cout<<endl;
-    cout<<"   |   |   \n";
+	int i = 0;
+	cout << "   |   |" << endl;
+	printInColor(ch[i / 3][i % 3]);
+	cout<< '|';
+	i++;
+	printInColor(ch[i / 3][i % 3]);
+	i++;
+	cout << "|";
+	printInColor(ch[i / 3][i % 3]);
+	i++;
+	for (int j = 0;j < 2;j++)
+	{
+		cout << endl << "___|___|___" << endl << "   |   |" << endl << " ";
+		printInColor(ch[i / 3][i % 3]);
+		cout << "|";
+		i++;
+		printInColor(ch[i / 3][i % 3]);
+		cout << "|";
+		i++;
+		printInColor(ch[i / 3][i % 3]);
+		i++;
+	}
+	cout <<endl<< "   |   |" << endl << endl;
 }
 
 void tictactoe()
@@ -704,7 +714,17 @@ void tictactoe()
 	scroll(currentitem);
     }
 }
-	
+     
+void printInColor(char c)
+{
+	if (c=='X')
+		textcolor(LIGHTRED);
+	else if (c == 'O')
+		textcolor(LIGHTBLUE);
+	char str[4] = {' ', c, ' ', '\0'};
+	cprintf(str);
+	textcolor(WHITE);
+}
 /********************************************DINOSAUR***************************************/
 int t,speed=40;
 	
