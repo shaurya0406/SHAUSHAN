@@ -632,6 +632,17 @@ int  diagcheck(char ch[3][3])
     else
 	return 0;
 }
+
+void printInColor(char c)
+{
+	if (c == 'X')
+		textcolor(LIGHTRED);
+	else if (c == 'O')
+		textcolor(LIGHTBLUE);
+	char str[4] = {' ', c, ' ', '\0'};
+	cprintf(str);
+	textcolor(WHITE);
+}
 	
 void rewrite(char ch[3][3])
 {
@@ -714,17 +725,7 @@ void tictactoe()
 	scroll(currentitem);
     }
 }
-     
-void printInColor(char c)
-{
-	if (c=='X')
-		textcolor(LIGHTRED);
-	else if (c == 'O')
-		textcolor(LIGHTBLUE);
-	char str[4] = {' ', c, ' ', '\0'};
-	cprintf(str);
-	textcolor(WHITE);
-}
+
 /********************************************DINOSAUR***************************************/
 int t,speed=40;
 	
