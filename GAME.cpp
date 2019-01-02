@@ -41,6 +41,7 @@ void printBoard(char playerBoard[9][9])
 			case 'F':
 				textcolor(LIGHTBLUE);//177
 				char temp[2] = {char(177), '\0'};
+				cprintf(temp);
 				textcolor(WHITE);
 				break;
 			case 'M':
@@ -106,11 +107,10 @@ void placeMines(char realBoard[9][9])
 
 int exists(int squares[8][2], int item[2])
 {
-	int found = 0;
-	for (int i = 0; i < 8 && !found; i++)
+	for (int i = 0; i < 8; i++)
 		if (squares[i][0] == item[0] && squares[i][1] == item[1])
-			found = 1;
-	return found;
+			return 1;
+	return 0;
 }
 
 int checkWin(char playerBoard[9][9], char realBoard[9][9])
