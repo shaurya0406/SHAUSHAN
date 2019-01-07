@@ -292,8 +292,8 @@ void word()
 			}
 			else
 				cout << "Incorrect Guess!" << endl << "You have only " << --guesses << " guesses left." << endl;
-			clrscr();
 		}
+		clrscr();
 		if (guesses > 0)
 		{
 			displayString(word, length);
@@ -312,10 +312,6 @@ void word()
 	} while (toupper(reply) != 'N');
    if(toupper(reply) == 'N')
    {
-	window(1,1,80,25);
-	textcolor(WHITE);
-	textbackground(0);
-	clrscr();
 	Drawmenu();
 	scroll(currentitem);
    }
