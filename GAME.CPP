@@ -92,7 +92,7 @@ void placeMines(char realBoard[9][9])
 		int x = (rand() % 9) + 1;
 		int y = (rand() % 9) + 1;
 		int temp[] = { x,y };
-		while (exists(squares, temp))
+		while (exists(squares, temp) || x>9 || y>9 || x<1 || y<1)
 		{
 			int x = (rand() % 9) + 1;
 			int y = (rand() % 9) + 1;
@@ -172,6 +172,8 @@ int adjacentSquares(int squares[8][2], int R, int C)
 
 void minesweeper()
 {
+	clrscr();
+	_setcursortype(_NORMALCURSOR);
 	char reply = 'N';
 	do
 	{
@@ -258,12 +260,13 @@ void displayString(char[], int N);
 void word()
 {
 	clrscr();
-	randomize();
+	_setcursortype(_NORMALCURSOR);
 	char WORDS[10][14] = {"CLAUSTROPHOBIA", "KLEPTOMANIAC","PSYCHOSOMATIC","INFORMATION","ACCOMMODATE","HANDKERCHIEF", "AMBIDEXTROUS","EQUIVALENT","ARCHITECTURE","AFICIONADO"};
 	char reply;
 	int score = 0;
 	do
 	{
+		clrscr();
 		int j = random(10);
 		char word[20];
 		int length = strlen(WORDS[j]);
@@ -281,6 +284,7 @@ void word()
 			char guess;
 			cout << "Guess a letter: ";
 			cin >> guess;
+			clrscr();
 			guess = toupper(guess);
 			int factor = editWord(word, length, check, guess);
 			if (factor != 0)
@@ -676,14 +680,14 @@ void rewrite(char ch[3][3])
 void tictactoe()
 {
     clrscr();
+    _setcursortype(_NORMALCURSOR);
     char ch[3][3]={'1','2','3','4','5','6','7','8','9'};
     int x,y,i,j,num,chance=1;
     char c;
     rewrite(ch);
     while(chance++<=9)
     {
-	cout<<"Player "<<chance%2+1<<", enter position.";
-	cout<<endl;
+	cout<<"Player "<<chance%2+1<<", Enter Position: ";
 	cin>>c;
 	if (toupper(c) == 'X')
 	{
@@ -842,6 +846,7 @@ void obstacle()
 
 void dinosaur()
 {
+	_setcursortype(_NOCURSOR);
 	char ch;
 	int i;
 	getup();
@@ -1009,8 +1014,8 @@ void about()
 	clrscr();
 	textcolor(LIGHTBLUE);
 	cprintf("ARCADEMASTER");
-		textcolor(WHITE);
-		cout<<endl<<"Computer Science Final Project"<<endl<<"by SHAURYA CHANDRA & SHASHANK NARAIN"<<endl<<"Class 11 G"<<endl<<"Press any key to go back to MAIN MENU";
+	textcolor(WHITE);
+	cout<<endl<<endl<<"Computer Science Final Project"<<endl<<"by SHAURYA CHANDRA & SHASHANK NARAIN"<<endl<<"Class 11 G"<<endl<<"Press any key to go back to MAIN MENU";
 	if(getch())
 	{
 		clrscr();
