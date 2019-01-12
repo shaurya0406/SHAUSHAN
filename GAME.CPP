@@ -653,28 +653,28 @@ void printInColor(char c)
 void rewrite(char ch[3][3])
 {
 	int i = 0;
-	cout << "   |   |" << endl;
+	cout << "   │   │" << endl;
 	printInColor(ch[i / 3][i % 3]);
-	cout<< '|';
+	cout<< '│';
 	i++;
 	printInColor(ch[i / 3][i % 3]);
 	i++;
-	cout << "|";
+	cout << '│';
 	printInColor(ch[i / 3][i % 3]);
 	i++;
 	for (int j = 0;j < 2;j++)
 	{
-		cout << endl << "___|___|___" << endl << "   |   |" << endl;
+		cout << endl << "___│___│___" << endl << "   │   │" << endl;
 		printInColor(ch[i / 3][i % 3]);
-		cout << "|";
+		cout << "│";
 		i++;
 		printInColor(ch[i / 3][i % 3]);
-		cout << "|";
+		cout << "│";
 		i++;
 		printInColor(ch[i / 3][i % 3]);
 		i++;
 	}
-	cout <<endl<< "   |   |" << endl << endl;
+	cout <<endl<< "   │   │" << endl << endl;
 }
 
 void tictactoe()
@@ -894,7 +894,7 @@ void Drawbox(int l,int b,int x ,int y,char text[])
    h[0] = char(179)	;
    for(int i = 0;i<l;i++)
    {
-	w[i]=char(45);
+	w[i]=char(196);
 	h[i+1] = ' ';
    }
    h[a] = char(179);
